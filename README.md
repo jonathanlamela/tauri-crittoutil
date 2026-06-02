@@ -11,6 +11,40 @@ A desktop app for cryptographic utilities, built with Tauri 2, Vue 3, and Vuetif
 
 All cryptographic operations run in the Rust backend via Tauri IPC — the frontend never handles raw cipher logic.
 
+## Screenshots
+
+### Phone — English
+
+| Home | Menu | Converter | Key Generator | Encrypter |
+|------|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/phone_en_01_home.png) | ![Menu](docs/screenshots/phone_en_02_menu.png) | ![Converter](docs/screenshots/phone_en_03_converter.png) | ![Key Generator](docs/screenshots/phone_en_04_key_generator.png) | ![Encrypter](docs/screenshots/phone_en_05_encrypter.png) |
+
+| Home Dark | Home Dark 2 |
+|-----------|-------------|
+| ![Home Dark](docs/screenshots/phone_en_06_home_dark.png) | ![Home Dark 2](docs/screenshots/phone_en_07_home_dark2.png) |
+
+### Phone — Italian
+
+| Home | Converter | Key Generator | Encrypter |
+|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/phone_it_01_home.png) | ![Converter](docs/screenshots/phone_it_02_converter.png) | ![Key Generator](docs/screenshots/phone_it_03_key_generator.png) | ![Encrypter](docs/screenshots/phone_it_04_encrypter.png) |
+
+### Tablet — English
+
+| Home | Menu | Converter | Key Generator | Encrypter |
+|------|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/tablet_en_01_home.png) | ![Menu](docs/screenshots/tablet_en_02_menu.png) | ![Converter](docs/screenshots/tablet_en_03_converter.png) | ![Key Generator](docs/screenshots/tablet_en_04_key_generator.png) | ![Encrypter](docs/screenshots/tablet_en_05_encrypter.png) |
+
+| Decrypter | Home Dark |
+|-----------|-----------|
+| ![Decrypter](docs/screenshots/tablet_en_06_decrypter.png) | ![Home Dark](docs/screenshots/tablet_en_07_home_dark.png) |
+
+### Tablet — Italian
+
+| Home | Converter | Key Generator | Encrypter |
+|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/tablet_it_01_home.png) | ![Converter](docs/screenshots/tablet_it_02_converter.png) | ![Key Generator](docs/screenshots/tablet_it_03_key_generator.png) | ![Encrypter](docs/screenshots/tablet_it_04_encrypter.png) |
+
 ## Requirements
 
 - [Node.js](https://nodejs.org/) (LTS)
