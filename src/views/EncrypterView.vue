@@ -271,7 +271,7 @@ async function copyCipher() {
       </v-card>
     </v-dialog>
 
-    <v-snackbar v-model="snackbar" :timeout="2000" color="primary">
+    <v-snackbar v-model="snackbar" :timeout="2000" color="primary" :style="{ marginBottom: 'env(safe-area-inset-bottom)' }">
       {{ t('encrypter.copied') }}
     </v-snackbar>
   </div>

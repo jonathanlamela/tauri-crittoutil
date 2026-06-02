@@ -109,6 +109,6 @@ async function copyToClipboard(text) {
       </v-list>
     </div>
 
-    <v-snackbar v-model="snackbar" :timeout="2000" color="primary">{{ snackbarMsg }}</v-snackbar>
+    <v-snackbar v-model="snackbar" :timeout="2000" color="primary" :style="{ marginBottom: 'env(safe-area-inset-bottom)' }">{{ snackbarMsg }}</v-snackbar>
   </div>
 </template>

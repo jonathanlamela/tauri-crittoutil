@@ -40,6 +40,7 @@ git log $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-paren
 Sulla base di quei commit genera due testi di changelog pronti per il Google Play Store:
 
 **Formato richiesto per entrambe le lingue:**
+
 - Massimo 500 caratteri
 - Tono professionale e user-facing (non tecnico)
 - Bullet list con `•`
@@ -50,11 +51,20 @@ Scrivi entrambi i changelog in `CHANGELOG.md` nella root del progetto, in questo
 ```markdown
 ## vX.Y.Z
 
-### Google Play — English
-...testo...
+## Google Play — English
 
-### Google Play — Italiano
-...testo...
+## Google Play — Italiano
+```
+
+Restituisci all'utente i testi generati per entrambe le lingue da copiare su Google Play nel formato
+
+```xml
+<en-US>
+...testo....
+</en-US>
+<it-IT>
+...testo....
+</it-IT>
 ```
 
 ## 5. Commit finale
