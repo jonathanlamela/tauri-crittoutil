@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.crittoutil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/app_background_light</item>
+        <item name="android:statusBarColor">@color/app_background_light</item>
+        <item name="android:navigationBarColor">@color/app_background_light</item>
+    </style>
+</resources>

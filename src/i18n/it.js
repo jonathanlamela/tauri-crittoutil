@@ -2,7 +2,7 @@ export default {
   nav: {
     home: 'Home',
     converter: 'Convertitore',
-    keyGenerator: 'Generatore di chiavi',
+    keyGenerator: 'Chiavi',
     encrypter: 'Cifratura',
     decrypter: 'Decifratura',
   },

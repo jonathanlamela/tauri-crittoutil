@@ -16,7 +16,7 @@ const features = computed(() => [
 
 <template>
   <div>
-    <div class="d-flex align-center mb-8">
+    <div class="d-flex align-center mb-8" style="margin-left: -4px;">
       <v-icon size="40" color="primary" class="mr-3">mdi-shield-lock</v-icon>
       <h1 class="text-h4 font-weight-bold">{{ t('home.title') }}</h1>
     </div>

@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "tauri": "cd ../../.. && node_modules/.bin/tauri"
+  }
+}

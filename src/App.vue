@@ -8,14 +8,14 @@ const route = useRoute()
 const router = useRouter()
 const theme = useTheme()
 const { t } = useI18n()
-const railExpanded = ref(true)
+const railExpanded = ref(false)
 
 const navItems = computed(() => [
-  { title: t('nav.home'),         icon: 'mdi-home',            iconOutline: 'mdi-home-outline',      to: '/' },
-  { title: t('nav.converter'),    icon: 'mdi-swap-horizontal', iconOutline: 'mdi-swap-horizontal',   to: '/converter' },
-  { title: t('nav.keyGenerator'), icon: 'mdi-key',             iconOutline: 'mdi-key-outline',       to: '/key-generator' },
-  { title: t('nav.encrypter'),    icon: 'mdi-lock',            iconOutline: 'mdi-lock-outline',      to: '/encrypter' },
-  { title: t('nav.decrypter'),    icon: 'mdi-lock-open',       iconOutline: 'mdi-lock-open-outline', to: '/decrypter' },
+  { title: t('nav.home'), icon: 'mdi-home', iconOutline: 'mdi-home-outline', to: '/' },
+  { title: t('nav.converter'), icon: 'mdi-swap-horizontal', iconOutline: 'mdi-swap-horizontal', to: '/converter' },
+  { title: t('nav.keyGenerator'), icon: 'mdi-key', iconOutline: 'mdi-key-outline', to: '/key-generator' },
+  { title: t('nav.encrypter'), icon: 'mdi-lock', iconOutline: 'mdi-lock-outline', to: '/encrypter' },
+  { title: t('nav.decrypter'), icon: 'mdi-lock-open', iconOutline: 'mdi-lock-open-outline', to: '/decrypter' },
 ])
 
 const selectedIndex = computed(() => {
@@ -37,6 +37,9 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
 
 <template>
   <v-app>
+    <!-- Scrim -->
+    <div v-if="railExpanded" class="app-nav__scrim" @click="railExpanded = false" />
+
     <!-- Custom MD3 Navigation Rail/Drawer -->
     <nav class="app-nav" :class="{ 'app-nav--expanded': railExpanded }">
       <!-- Header -->
@@ -49,13 +52,9 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
 
       <!-- Nav items -->
       <div class="app-nav__items">
-        <button
-          v-for="(item, index) in navItems"
-          :key="item.to"
-          class="nav-item"
+        <button v-for="(item, index) in navItems" :key="item.to" class="nav-item"
           :class="{ 'nav-item--active': selectedIndex === index, 'nav-item--rail': !railExpanded }"
-          @click="router.push(item.to)"
-        >
+          @click="router.push(item.to); railExpanded = false">
           <!-- MD3 pill indicator -->
           <span class="nav-item__indicator">
             <v-icon size="24">{{ selectedIndex === index ? item.icon : item.iconOutline }}</v-icon>
@@ -66,7 +65,14 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
       </div>
     </nav>
 
-    <v-main :style="{ paddingLeft: railExpanded ? '240px' : '80px', transition: 'padding-left 0.25s cubic-bezier(0.2,0,0,1)' }">
+    <v-main :style="{
+      paddingLeft: '80px',
+      paddingTop: 'env(safe-area-inset-top)',
+      paddingBottom: 'env(safe-area-inset-bottom)',
+      overflowY: 'auto',
+      height: '100dvh',
+      boxSizing: 'border-box',
+    }">
       <v-container fluid class="pa-6" style="max-width: 860px;">
         <router-view />
       </v-container>
@@ -79,7 +85,7 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
   display: flex;
   flex-direction: column;
   width: 80px;
-  height: 100vh;
+  height: 100dvh;
   background: rgb(var(--v-theme-surface));
   border-right: none;
   transition: width 0.25s cubic-bezier(0.2, 0, 0, 1);
@@ -89,10 +95,21 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
   left: 0;
   top: 0;
   z-index: 100;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: border-box;
 }
 
 .app-nav--expanded {
   width: 240px;
+  z-index: 200;
+}
+
+.app-nav__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgb(0 0 0 / 0.32);
 }
 
 .app-nav__header {
@@ -116,6 +133,8 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
   flex-direction: column;
   gap: 4px;
   padding: 8px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 /* Plain button reset */
@@ -170,8 +189,9 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
   background-color: rgb(var(--v-theme-on-surface) / 0.08);
 }
 
-.nav-item--active .nav-item__indicator {
-  background-color: rgb(var(--v-theme-secondary-container));
+.nav-item--active .nav-item__indicator,
+.nav-item--rail.nav-item--active .nav-item__indicator {
+  background-color: rgb(var(--v-theme-secondary-container)) !important;
 }
 
 .nav-item--active {
@@ -210,5 +230,4 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
 .nav-icon-btn:hover {
   background-color: rgb(var(--v-theme-on-surface) / 0.08);
 }
-
 </style>
