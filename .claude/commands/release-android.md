@@ -52,8 +52,11 @@ Scrivi entrambi i changelog in `CHANGELOG.md` nella root del progetto, in questo
 ## vX.Y.Z
 
 ## Google Play — English
+...testo....
 
 ## Google Play — Italiano
+...testo....
+
 ```
 
 Restituisci all'utente i testi generati per entrambe le lingue da copiare su Google Play nel formato
