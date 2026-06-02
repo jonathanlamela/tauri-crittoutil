@@ -48,7 +48,7 @@ onUnmounted(() => mq?.removeEventListener('change', onSystemThemeChange))
         <button class="nav-icon-btn" @click="railExpanded = !railExpanded">
           <v-icon>{{ railExpanded ? 'mdi-menu-open' : 'mdi-menu' }}</v-icon>
         </button>
-        <span v-if="railExpanded" class="app-nav__title">CrittoUtil</span>
+        <span v-if="railExpanded" class="app-nav__title">{{ t('home.title') }}</span>
       </div>
 
       <!-- Nav items -->

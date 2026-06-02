@@ -8,7 +8,7 @@ export default {
     fileHasher: 'File Hash',
   },
   home: {
-    title: 'CrittoUtil',
+    title: 'Critto Util',
     converterDesc: 'Convert between text, binary, and Base64 formats',
     keyGeneratorDesc: 'Generate cryptographically secure random keys (64–512 bit)',
     encrypterDesc: 'Encrypt text with MD5, AES (CBC/ECB) or DES (CBC/ECB)',
