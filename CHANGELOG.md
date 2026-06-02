@@ -1,3 +1,19 @@
+## v2.0.3
+
+### Google Play — English
+
+Versione 2.0.3
+• Fixed toast notifications positioning: now correctly displayed within the safe zone, above the system navigation bar
+• General bug fixes and stability improvements for a smoother experience
+
+### Google Play — Italiano
+
+Versione 2.0.3
+• Corretta la posizione delle notifiche toast: ora visualizzate correttamente nella safe zone, sopra la barra di navigazione di sistema
+• Correzioni di bug generali e miglioramenti alla stabilità per un'esperienza più fluida
+
+---
+
 ## v2.0.2
 
 **Google Play — English**
