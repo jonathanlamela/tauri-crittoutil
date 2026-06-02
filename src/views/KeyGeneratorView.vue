@@ -3,11 +3,11 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { generateKey } from '../composables/useCrypto.js'
 import { useKeyHistory } from '../composables/useKeyHistory.js'
+import { useKeyGeneratorState } from '../composables/useKeyGeneratorState.js'
 
 const { t } = useI18n()
 const { keys, addKey } = useKeyHistory()
-const keySize = ref(128)
-const generatedKey = ref('')
+const { keySize, generatedKey, clear } = useKeyGeneratorState()
 const loading = ref(false)
 const snackbar = ref(false)
 const snackbarMsg = ref('')
@@ -42,7 +42,12 @@ async function copyToClipboard(text) {
 
 <template>
   <div>
-    <h2 class="text-h5 font-weight-bold mb-6">{{ t('keyGenerator.title') }}</h2>
+    <div class="d-flex align-center justify-space-between mb-6">
+      <h2 class="text-h5 font-weight-bold">{{ t('keyGenerator.title') }}</h2>
+      <v-btn variant="text" rounded="xl" size="small" prepend-icon="mdi-delete-outline" @click="clear">
+        {{ t('common.clear') }}
+      </v-btn>
+    </div>
 
     <v-select
       v-model="keySize"

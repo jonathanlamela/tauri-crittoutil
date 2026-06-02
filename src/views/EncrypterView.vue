@@ -1,27 +1,28 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { encrypt, encryptAlgorithms, validateKey } from '../composables/useCrypto.js'
+import { encrypt, encryptAlgorithms } from '../composables/useCrypto.js'
 import { useKeyHistory } from '../composables/useKeyHistory.js'
+import { useEncrypterState } from '../composables/useEncrypterState.js'
 
 const { t } = useI18n()
-const { keys } = useKeyHistory()
-const selectedAlgId = ref('md5')
-const plaintext = ref('')
-const key = ref('')
-const result = ref('')
-const errorMsg = ref('')
+const { keys, addKey } = useKeyHistory()
+const { selectedAlgId, plaintext, key, iv, resultCipher, resultIv, errorMsg, clear } = useEncrypterState()
 const loading = ref(false)
 const snackbar = ref(false)
 const keyPickerDialog = ref(false)
+const ivPickerDialog = ref(false)
 
 const selectedAlg = computed(() => encryptAlgorithms.find(a => a.id === selectedAlgId.value))
 const algItems = encryptAlgorithms.map(a => ({ title: a.name, value: a.id }))
+const ivWasGenerated = computed(() => selectedAlg.value?.ivLength && !iv.value)
 
 watch(selectedAlgId, () => {
-  result.value = ''
+  resultCipher.value = ''
+  resultIv.value = ''
   errorMsg.value = ''
   key.value = ''
+  iv.value = ''
 })
 
 const payloadLabel = computed(() =>
@@ -43,26 +44,68 @@ function getKeyError(algVal, keyVal) {
 }
 
 const plaintextError = computed(() => {
-  if (!plaintext.value && !result.value && !errorMsg.value) return ''
+  if (!plaintext.value && !resultCipher.value && !errorMsg.value) return ''
   if (!plaintext.value) return t('encrypter.enterText')
   return ''
 })
 
 const keyError = computed(() => {
   if (!selectedAlg.value?.requireKey) return ''
-  if (!key.value && !result.value && !errorMsg.value) return ''
+  if (!key.value && !resultCipher.value && !errorMsg.value) return ''
   return getKeyError(selectedAlg.value, key.value)
+})
+
+const BASE64_RE = /[+/=]/
+
+function getIvError(algVal, ivVal) {
+  if (!algVal?.ivLength || !ivVal) return ''
+  const { ivLength } = algVal
+  const isBase64 = BASE64_RE.test(ivVal)
+  if (isBase64) {
+    let decoded
+    try { decoded = atob(ivVal) } catch { return t('encrypter.invalidIvBase64') }
+    if (decoded.length !== ivLength)
+      return ivLength === 8 ? t('encrypter.invalidIvDes') : t('encrypter.invalidIvAes')
+  } else {
+    const byteLen = new TextEncoder().encode(ivVal).length
+    if (byteLen !== ivLength)
+      return ivLength === 8 ? t('encrypter.invalidIvDes') : t('encrypter.invalidIvAes')
+  }
+  return ''
+}
+
+const ivError = computed(() => {
+  if (!selectedAlg.value?.ivLength || !iv.value) return ''
+  return getIvError(selectedAlg.value, iv.value)
 })
 
 async function onEncrypt() {
   if (!plaintext.value) { errorMsg.value = t('encrypter.enterText'); return }
   const kErr = getKeyError(selectedAlg.value, key.value)
   if (kErr) { errorMsg.value = kErr; return }
+  const iErr = getIvError(selectedAlg.value, iv.value)
+  if (iErr) { errorMsg.value = iErr; return }
   loading.value = true
   errorMsg.value = ''
-  result.value = ''
+  resultCipher.value = ''
+  resultIv.value = ''
   try {
-    result.value = await encrypt(selectedAlg.value, plaintext.value, key.value)
+    const res = await encrypt(selectedAlg.value, plaintext.value, key.value, iv.value || null)
+    if (res && typeof res === 'object') {
+      resultCipher.value = res.cipher
+      resultIv.value = res.iv
+      // Populate IV field with the generated value so the user can see and reuse it
+      if (!iv.value) iv.value = res.iv
+      // Save IV: auto-generated one is saved as-is; manually entered one was already validated
+      addKey(res.iv, res.iv.length)
+    } else {
+      resultCipher.value = res
+    }
+    // Save manually entered key to history
+    if (key.value) {
+      const keyBytes = new TextEncoder().encode(key.value).length
+      addKey(key.value, keyBytes)
+    }
   } catch (e) {
     errorMsg.value = e?.message || t('encrypter.error')
   } finally {
@@ -75,15 +118,25 @@ function pickKey(k) {
   keyPickerDialog.value = false
 }
 
-async function copyResult() {
-  await navigator.clipboard.writeText(result.value)
+function pickIv(k) {
+  iv.value = k.name
+  ivPickerDialog.value = false
+}
+
+async function copyCipher() {
+  await navigator.clipboard.writeText(resultCipher.value)
   snackbar.value = true
 }
 </script>
 
 <template>
   <div>
-    <h2 class="text-h5 font-weight-bold mb-6">{{ t('encrypter.title') }}</h2>
+    <div class="d-flex align-center justify-space-between mb-6">
+      <h2 class="text-h5 font-weight-bold">{{ t('encrypter.title') }}</h2>
+      <v-btn variant="text" rounded="xl" size="small" prepend-icon="mdi-delete-outline" @click="clear">
+        {{ t('common.clear') }}
+      </v-btn>
+    </div>
 
     <v-select
       v-model="selectedAlgId"
@@ -98,6 +151,27 @@ async function copyResult() {
       :error-messages="plaintextError"
       class="mb-4"
     />
+
+    <v-text-field
+      v-if="selectedAlg?.ivLength"
+      v-model="iv"
+      :label="t('encrypter.iv')"
+      :hint="t('encrypter.ivHint')"
+      :error-messages="ivError"
+      persistent-hint
+      class="mb-4"
+    >
+      <template #append-inner>
+        <v-btn
+          icon="mdi-key"
+          variant="text"
+          size="small"
+          :disabled="keys.length === 0"
+          :title="t('encrypter.pickIvTooltip')"
+          @click="ivPickerDialog = true"
+        />
+      </template>
+    </v-text-field>
 
     <v-text-field
       v-if="selectedAlg?.requireKey"
@@ -134,17 +208,19 @@ async function copyResult() {
       {{ errorMsg }}
     </v-alert>
 
-    <v-card v-if="result" variant="tonal" color="primary" rounded="xl">
+    <v-card v-if="resultCipher" variant="tonal" color="primary" rounded="xl" class="mb-4">
       <v-card-text>
         <div class="d-flex align-center justify-space-between mb-2">
-          <span class="text-subtitle-2 font-weight-bold">{{ payloadLabel }}</span>
-          <v-btn icon="mdi-content-copy" variant="text" size="small" @click="copyResult" />
+          <span class="text-subtitle-2 font-weight-bold">{{ t('encrypter.cipherOutput') }}</span>
+          <v-btn icon="mdi-content-copy" variant="text" size="small" @click="copyCipher" />
+
         </div>
         <div class="text-body-1 font-weight-medium" style="word-break: break-all; user-select: text;">
-          {{ result }}
+          {{ resultCipher }}
         </div>
       </v-card-text>
     </v-card>
+
 
     <v-dialog v-model="keyPickerDialog" max-width="480">
       <v-card rounded="xl">
@@ -164,6 +240,28 @@ async function copyResult() {
         <v-card-actions>
           <v-spacer />
           <v-btn @click="keyPickerDialog = false">{{ t('encrypter.cancel') }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="ivPickerDialog" max-width="480">
+      <v-card rounded="xl">
+        <v-card-title class="pa-4">{{ t('encrypter.pickIv') }}</v-card-title>
+        <v-list lines="two">
+          <v-list-item
+            v-for="(k, i) in keys"
+            :key="i"
+            :subtitle="`${k.bits} bit`"
+            @click="pickIv(k)"
+          >
+            <template #title>
+              <span style="font-family: monospace; font-size: 0.85rem; word-break: break-all;">{{ k.name }}</span>
+            </template>
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="ivPickerDialog = false">{{ t('encrypter.cancel') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

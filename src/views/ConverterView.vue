@@ -1,14 +1,11 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
+import { useConverterState } from '../composables/useConverterState.js'
 
 const { t } = useI18n()
-
-const input = ref('')
-const inputType = ref('text')
-const outputType = ref('binary')
-const output = ref('')
-const inputError = ref('')
+const { input, inputType, outputType, output, inputError, clear } = useConverterState()
 const snackbar = ref(false)
 
 const inputTypes = computed(() => [
@@ -92,7 +89,12 @@ async function copyOutput() {
 
 <template>
   <div>
-    <h2 class="text-h5 font-weight-bold mb-6">{{ t('converter.title') }}</h2>
+    <div class="d-flex align-center justify-space-between mb-6">
+      <h2 class="text-h5 font-weight-bold">{{ t('converter.title') }}</h2>
+      <v-btn variant="text" rounded="xl" size="small" prepend-icon="mdi-delete-outline" @click="clear">
+        {{ t('common.clear') }}
+      </v-btn>
+    </div>
 
     <v-text-field
       v-model="input"

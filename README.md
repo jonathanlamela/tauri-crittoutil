@@ -25,9 +25,13 @@ All cryptographic operations run in the Rust backend via Tauri IPC — the front
 
 ### Phone — Italian
 
-| Home | Converter | Key Generator | Encrypter |
-|------|-----------|---------------|-----------|
-| ![Home](docs/screenshots/phone_it_01_home.png) | ![Converter](docs/screenshots/phone_it_02_converter.png) | ![Key Generator](docs/screenshots/phone_it_03_key_generator.png) | ![Encrypter](docs/screenshots/phone_it_04_encrypter.png) |
+| Home | Menu | Converter | Key Generator | Encrypter |
+|------|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/phone_it_01_home.png) | ![Menu](docs/screenshots/phone_it_02_menu.png) | ![Converter](docs/screenshots/phone_it_03_converter.png) | ![Key Generator](docs/screenshots/phone_it_04_key_generator.png) | ![Encrypter](docs/screenshots/phone_it_05_encrypter.png) |
+
+| Home Dark | Home Dark 2 |
+|-----------|-------------|
+| ![Home Dark](docs/screenshots/phone_it_06_home_dark.png) | ![Home Dark 2](docs/screenshots/phone_it_07_home_dark2.png) |
 
 ### Tablet 7" — English
 
@@ -41,9 +45,13 @@ All cryptographic operations run in the Rust backend via Tauri IPC — the front
 
 ### Tablet 7" — Italian
 
-| Home | Converter | Key Generator | Encrypter |
-|------|-----------|---------------|-----------|
-| ![Home](docs/screenshots/tablet7_it_01_home.png) | ![Converter](docs/screenshots/tablet7_it_02_converter.png) | ![Key Generator](docs/screenshots/tablet7_it_03_key_generator.png) | ![Encrypter](docs/screenshots/tablet7_it_04_encrypter.png) |
+| Home | Menu | Converter | Key Generator | Encrypter |
+|------|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/tablet7_it_01_home.png) | ![Menu](docs/screenshots/tablet7_it_02_menu.png) | ![Converter](docs/screenshots/tablet7_it_03_converter.png) | ![Key Generator](docs/screenshots/tablet7_it_04_key_generator.png) | ![Encrypter](docs/screenshots/tablet7_it_05_encrypter.png) |
+
+| Decrypter | Home Dark |
+|-----------|-----------|
+| ![Decrypter](docs/screenshots/tablet7_it_06_decrypter.png) | ![Home Dark](docs/screenshots/tablet7_it_07_home_dark.png) |
 
 ### Tablet 10" — English
 
@@ -57,9 +65,13 @@ All cryptographic operations run in the Rust backend via Tauri IPC — the front
 
 ### Tablet 10" — Italian
 
-| Home | Converter | Key Generator | Encrypter |
-|------|-----------|---------------|-----------|
-| ![Home](docs/screenshots/tablet10_it_01_home.png) | ![Converter](docs/screenshots/tablet10_it_02_converter.png) | ![Key Generator](docs/screenshots/tablet10_it_03_key_generator.png) | ![Encrypter](docs/screenshots/tablet10_it_04_encrypter.png) |
+| Home | Menu | Converter | Key Generator | Encrypter |
+|------|------|-----------|---------------|-----------|
+| ![Home](docs/screenshots/tablet10_it_01_home.png) | ![Menu](docs/screenshots/tablet10_it_02_menu.png) | ![Converter](docs/screenshots/tablet10_it_03_converter.png) | ![Key Generator](docs/screenshots/tablet10_it_04_key_generator.png) | ![Encrypter](docs/screenshots/tablet10_it_05_encrypter.png) |
+
+| Decrypter | Home Dark |
+|-----------|-----------|
+| ![Decrypter](docs/screenshots/tablet10_it_06_decrypter.png) | ![Home Dark](docs/screenshots/tablet10_it_07_home_dark.png) |
 
 ## Requirements
 

@@ -10,7 +10,7 @@ const OUT_DIR = path.resolve(__dirname, '../docs/screenshots')
 const VIEWPORTS = {
   phone:    { width: 390,  height: 844  },
   tablet7:  { width: 600,  height: 1024 },
-  tablet10: { width: 820,  height: 1180 },
+  tablet10: { width: 1080, height: 1920 },
 }
 
 async function expandNav(page) {
@@ -38,9 +38,12 @@ const SCENES = [
   { file: 'phone_en_07_home_dark2.png',    device: 'phone',    locale: 'en', theme: 'dark',  route: '/', actions: expandNav },
   // Phone IT
   { file: 'phone_it_01_home.png',          device: 'phone',    locale: 'it', theme: 'light', route: '/' },
-  { file: 'phone_it_02_converter.png',     device: 'phone',    locale: 'it', theme: 'light', route: '/converter' },
-  { file: 'phone_it_03_key_generator.png', device: 'phone',    locale: 'it', theme: 'light', route: '/key-generator' },
-  { file: 'phone_it_04_encrypter.png',     device: 'phone',    locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'phone_it_02_menu.png',          device: 'phone',    locale: 'it', theme: 'light', route: '/', actions: expandNav },
+  { file: 'phone_it_03_converter.png',     device: 'phone',    locale: 'it', theme: 'light', route: '/converter' },
+  { file: 'phone_it_04_key_generator.png', device: 'phone',    locale: 'it', theme: 'light', route: '/key-generator' },
+  { file: 'phone_it_05_encrypter.png',     device: 'phone',    locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'phone_it_06_home_dark.png',     device: 'phone',    locale: 'it', theme: 'dark',  route: '/' },
+  { file: 'phone_it_07_home_dark2.png',    device: 'phone',    locale: 'it', theme: 'dark',  route: '/', actions: expandNav },
   // Tablet 7" EN
   { file: 'tablet7_en_01_home.png',          device: 'tablet7',  locale: 'en', theme: 'light', route: '/' },
   { file: 'tablet7_en_02_menu.png',          device: 'tablet7',  locale: 'en', theme: 'light', route: '/', actions: expandNav },
@@ -51,9 +54,12 @@ const SCENES = [
   { file: 'tablet7_en_07_home_dark.png',     device: 'tablet7',  locale: 'en', theme: 'dark',  route: '/' },
   // Tablet 7" IT
   { file: 'tablet7_it_01_home.png',          device: 'tablet7',  locale: 'it', theme: 'light', route: '/' },
-  { file: 'tablet7_it_02_converter.png',     device: 'tablet7',  locale: 'it', theme: 'light', route: '/converter' },
-  { file: 'tablet7_it_03_key_generator.png', device: 'tablet7',  locale: 'it', theme: 'light', route: '/key-generator' },
-  { file: 'tablet7_it_04_encrypter.png',     device: 'tablet7',  locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'tablet7_it_02_menu.png',          device: 'tablet7',  locale: 'it', theme: 'light', route: '/', actions: expandNav },
+  { file: 'tablet7_it_03_converter.png',     device: 'tablet7',  locale: 'it', theme: 'light', route: '/converter' },
+  { file: 'tablet7_it_04_key_generator.png', device: 'tablet7',  locale: 'it', theme: 'light', route: '/key-generator' },
+  { file: 'tablet7_it_05_encrypter.png',     device: 'tablet7',  locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'tablet7_it_06_decrypter.png',     device: 'tablet7',  locale: 'it', theme: 'light', route: '/decrypter', actions: fillDecrypter },
+  { file: 'tablet7_it_07_home_dark.png',     device: 'tablet7',  locale: 'it', theme: 'dark',  route: '/' },
   // Tablet 10" EN
   { file: 'tablet10_en_01_home.png',          device: 'tablet10', locale: 'en', theme: 'light', route: '/' },
   { file: 'tablet10_en_02_menu.png',          device: 'tablet10', locale: 'en', theme: 'light', route: '/', actions: expandNav },
@@ -64,9 +70,12 @@ const SCENES = [
   { file: 'tablet10_en_07_home_dark.png',     device: 'tablet10', locale: 'en', theme: 'dark',  route: '/' },
   // Tablet 10" IT
   { file: 'tablet10_it_01_home.png',          device: 'tablet10', locale: 'it', theme: 'light', route: '/' },
-  { file: 'tablet10_it_02_converter.png',     device: 'tablet10', locale: 'it', theme: 'light', route: '/converter' },
-  { file: 'tablet10_it_03_key_generator.png', device: 'tablet10', locale: 'it', theme: 'light', route: '/key-generator' },
-  { file: 'tablet10_it_04_encrypter.png',     device: 'tablet10', locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'tablet10_it_02_menu.png',          device: 'tablet10', locale: 'it', theme: 'light', route: '/', actions: expandNav },
+  { file: 'tablet10_it_03_converter.png',     device: 'tablet10', locale: 'it', theme: 'light', route: '/converter' },
+  { file: 'tablet10_it_04_key_generator.png', device: 'tablet10', locale: 'it', theme: 'light', route: '/key-generator' },
+  { file: 'tablet10_it_05_encrypter.png',     device: 'tablet10', locale: 'it', theme: 'light', route: '/encrypter', actions: fillEncrypter },
+  { file: 'tablet10_it_06_decrypter.png',     device: 'tablet10', locale: 'it', theme: 'light', route: '/decrypter', actions: fillDecrypter },
+  { file: 'tablet10_it_07_home_dark.png',     device: 'tablet10', locale: 'it', theme: 'dark',  route: '/' },
 ]
 
 async function captureScene(browser, scene) {
