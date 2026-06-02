@@ -2,10 +2,13 @@
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { useConverterState } from '../composables/useConverterState.js'
+import { useConverterStore } from '../stores/converter.js'
+import { storeToRefs } from 'pinia'
 
 const { t } = useI18n()
-const { input, inputType, outputType, output, inputError, clear } = useConverterState()
+const converterStore = useConverterStore()
+const { input, inputType, outputType, output, inputError } = storeToRefs(converterStore)
+const { clear } = converterStore
 const snackbar = ref(false)
 
 const inputTypes = computed(() => [

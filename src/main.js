@@ -6,6 +6,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
+import { createPinia } from 'pinia'
 import { i18n } from './i18n/index.js'
 import App from './App.vue'
 import HomeView from './views/HomeView.vue'
@@ -110,4 +111,4 @@ const vuetify = createVuetify({
   },
 })
 
-createApp(App).use(router).use(vuetify).use(i18n).mount('#app')
+createApp(App).use(createPinia()).use(router).use(vuetify).use(i18n).mount('#app')

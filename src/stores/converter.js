@@ -1,12 +1,13 @@
+import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const input = ref('')
-const inputType = ref('text')
-const outputType = ref('binary')
-const output = ref('')
-const inputError = ref('')
+export const useConverterStore = defineStore('converter', () => {
+  const input = ref('')
+  const inputType = ref('text')
+  const outputType = ref('binary')
+  const output = ref('')
+  const inputError = ref('')
 
-export function useConverterState() {
   function clear() {
     input.value = ''
     inputType.value = 'text'
@@ -16,4 +17,4 @@ export function useConverterState() {
   }
 
   return { input, inputType, outputType, output, inputError, clear }
-}
+})

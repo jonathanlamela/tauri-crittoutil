@@ -2,12 +2,17 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { generateKey } from '../composables/useCrypto.js'
-import { useKeyHistory } from '../composables/useKeyHistory.js'
-import { useKeyGeneratorState } from '../composables/useKeyGeneratorState.js'
+import { useKeyHistoryStore } from '../stores/keyHistory.js'
+import { useKeyGeneratorStore } from '../stores/keyGenerator.js'
+import { storeToRefs } from 'pinia'
 
 const { t } = useI18n()
-const { keys, addKey } = useKeyHistory()
-const { keySize, generatedKey, clear } = useKeyGeneratorState()
+const keyHistoryStore = useKeyHistoryStore()
+const { keys } = storeToRefs(keyHistoryStore)
+const { addKey } = keyHistoryStore
+const keyGeneratorStore = useKeyGeneratorStore()
+const { keySize, generatedKey } = storeToRefs(keyGeneratorStore)
+const { clear } = keyGeneratorStore
 const loading = ref(false)
 const snackbar = ref(false)
 const snackbarMsg = ref('')

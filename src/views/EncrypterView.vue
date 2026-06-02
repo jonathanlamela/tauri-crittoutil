@@ -2,12 +2,17 @@
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { encrypt, encryptAlgorithms } from '../composables/useCrypto.js'
-import { useKeyHistory } from '../composables/useKeyHistory.js'
-import { useEncrypterState } from '../composables/useEncrypterState.js'
+import { useKeyHistoryStore } from '../stores/keyHistory.js'
+import { useEncrypterStore } from '../stores/encrypter.js'
+import { storeToRefs } from 'pinia'
 
 const { t } = useI18n()
-const { keys, addKey } = useKeyHistory()
-const { selectedAlgId, plaintext, key, iv, resultCipher, resultIv, errorMsg, clear } = useEncrypterState()
+const keyHistoryStore = useKeyHistoryStore()
+const { keys } = storeToRefs(keyHistoryStore)
+const { addKey } = keyHistoryStore
+const encrypterStore = useEncrypterStore()
+const { selectedAlgId, plaintext, key, iv, resultCipher, resultIv, errorMsg } = storeToRefs(encrypterStore)
+const { clear } = encrypterStore
 const loading = ref(false)
 const snackbar = ref(false)
 const keyPickerDialog = ref(false)
