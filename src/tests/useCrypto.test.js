@@ -282,9 +282,10 @@ describe('validateKey', () => {
   })
 
   it('returns DES error for wrong key length', () => {
-    const err = validateKey(desAlg, 'tooshort')
-    // 'tooshort' is exactly 8 bytes — use a 7-char string instead
-    const err2 = validateKey(desAlg, 'toolong_')
     expect(validateKey(desAlg, 'short')).toMatch(/8 bytes/)
+  })
+
+  it('returns null when requireKey is true but keyLengths is not defined', () => {
+    expect(validateKey({ requireKey: true }, 'anykey')).toBeNull()
   })
 })

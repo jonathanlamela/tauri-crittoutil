@@ -25,4 +25,4 @@ dist-ssr
 
 # Android signing credentials — never commit
 src-tauri/gen/android/keystore.properties
-coverage/
+coverage
