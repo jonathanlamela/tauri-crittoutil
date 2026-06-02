@@ -50,11 +50,21 @@ const decAnim = computed(() => {
   return             { from: 'xK8p·Qr9Z', to: 'secret',    phase: 'done' }
 })
 
+// File hasher: offset +13 ticks — filename (20t) → scramble (10t) → hash (20t)
+const hashAnim = computed(() => {
+  void tick.value
+  const p = (tick.value + 13) % 50
+  if (p < 20) return { from: 'file.pdf', to: '···',              phase: 'idle' }
+  if (p < 30) return { from: rnd(7),     to: rnd(8),             phase: 'scramble' }
+  return             { from: 'file.pdf', to: '5d41402a…',        phase: 'done' }
+})
+
 const features = computed(() => [
-  { icon: 'mdi-swap-horizontal', title: t('nav.converter'),    description: t('home.converterDesc'),    to: '/converter',     anim: 'converter', role: 'primary' },
-  { icon: 'mdi-key',             title: t('nav.keyGenerator'), description: t('home.keyGeneratorDesc'), to: '/key-generator', anim: 'keygen',    role: 'secondary' },
-  { icon: 'mdi-lock',            title: t('nav.encrypter'),    description: t('home.encrypterDesc'),    to: '/encrypter',     anim: 'encrypter', role: 'tertiary' },
-  { icon: 'mdi-lock-open',       title: t('nav.decrypter'),    description: t('home.decrypterDesc'),    to: '/decrypter',     anim: 'decrypter', role: 'error' },
+  { icon: 'mdi-swap-horizontal', title: t('nav.converter'),    description: t('home.converterDesc'),    to: '/converter',     anim: 'converter',   role: 'primary' },
+  { icon: 'mdi-key',             title: t('nav.keyGenerator'), description: t('home.keyGeneratorDesc'), to: '/key-generator', anim: 'keygen',      role: 'secondary' },
+  { icon: 'mdi-lock',            title: t('nav.encrypter'),    description: t('home.encrypterDesc'),    to: '/encrypter',     anim: 'encrypter',   role: 'tertiary' },
+  { icon: 'mdi-lock-open',       title: t('nav.decrypter'),    description: t('home.decrypterDesc'),    to: '/decrypter',     anim: 'decrypter',   role: 'error' },
+  { icon: 'mdi-file-search',     title: t('nav.fileHasher'),   description: t('home.fileHasherDesc'),   to: '/file-hasher',   anim: 'filehasher',  role: 'primary' },
 ])
 </script>
 
@@ -137,6 +147,20 @@ const features = computed(() => [
                   <Transition name="scroll-up">
                     <span :key="decAnim.to" class="anim-to" :class="{ 'anim-scramble': decAnim.phase === 'scramble' }">
                       {{ decAnim.to }}
+                    </span>
+                  </Transition>
+                </div>
+              </div>
+
+              <!-- File hasher -->
+              <div v-if="f.anim === 'filehasher'" class="anim-box"
+                :style="`--anim-accent: rgb(var(--v-theme-${f.role}))`">
+                <span class="anim-from">{{ hashAnim.from }}</span>
+                <v-icon size="14" class="anim-arrow" :class="{ 'anim-pulse': hashAnim.phase === 'scramble' }">mdi-pound</v-icon>
+                <div class="anim-scroll-wrap">
+                  <Transition name="scroll-up">
+                    <span :key="hashAnim.to" class="anim-to" :class="{ 'anim-scramble': hashAnim.phase === 'scramble' }">
+                      {{ hashAnim.to }}
                     </span>
                   </Transition>
                 </div>

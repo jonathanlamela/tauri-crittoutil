@@ -16,6 +16,7 @@ const navItems = computed(() => [
   { title: t('nav.keyGenerator'), icon: 'mdi-key', iconOutline: 'mdi-key-outline', to: '/key-generator' },
   { title: t('nav.encrypter'), icon: 'mdi-lock', iconOutline: 'mdi-lock-outline', to: '/encrypter' },
   { title: t('nav.decrypter'), icon: 'mdi-lock-open', iconOutline: 'mdi-lock-open-outline', to: '/decrypter' },
+  { title: t('nav.fileHasher'), icon: 'mdi-file-search', iconOutline: 'mdi-file-search-outline', to: '/file-hasher' },
 ])
 
 const selectedIndex = computed(() => {

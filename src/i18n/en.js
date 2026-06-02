@@ -5,6 +5,7 @@ export default {
     keyGenerator: 'Key Generator',
     encrypter: 'Encrypter',
     decrypter: 'Decrypter',
+    fileHasher: 'File Hash',
   },
   home: {
     title: 'CrittoUtil',
@@ -12,6 +13,7 @@ export default {
     keyGeneratorDesc: 'Generate cryptographically secure random keys (64–512 bit)',
     encrypterDesc: 'Encrypt text with MD5, AES (CBC/ECB) or DES (CBC/ECB)',
     decrypterDesc: 'Decrypt ciphertext with AES (CBC/ECB) or DES (CBC/ECB)',
+    fileHasherDesc: 'Compute the MD5 checksum of any file',
     open: 'Open',
   },
   common: {
@@ -65,6 +67,14 @@ export default {
     pickKey: 'Pick a generated key',
     pickIv: 'Pick a key to use as IV',
     cancel: 'Cancel',
+  },
+  fileHasher: {
+    title: 'File Hash',
+    dropZone: 'Click or drag a file here',
+    dropZoneHint: 'Any file type — MD5 checksum will be computed',
+    hashLabel: 'MD5 hash',
+    copy: 'Copy',
+    copied: 'Copied to clipboard',
   },
   decrypter: {
     title: 'Decrypter',

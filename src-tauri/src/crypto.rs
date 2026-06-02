@@ -44,6 +44,12 @@ pub fn hash_md5(plaintext: String) -> String {
 }
 
 #[tauri::command]
+pub fn hash_md5_bytes(data: Vec<u8>) -> String {
+    let digest = md5::compute(&data);
+    format!("{:x}", digest)
+}
+
+#[tauri::command]
 pub fn encrypt_aes_cbc(plaintext: String, key: String, iv: Option<String>) -> Result<CbcResult, CryptoError> {
     let key_bytes = key.as_bytes();
     let mut iv_buf = [0u8; 16];

@@ -4,6 +4,10 @@ export async function hashMd5(plaintext) {
   return invoke('hash_md5', { plaintext })
 }
 
+export async function hashMd5Bytes(data) {
+  return invoke('hash_md5_bytes', { data: Array.from(data) })
+}
+
 export async function encryptAesCbc(plaintext, key, iv = null) {
   return invoke('encrypt_aes_cbc', { plaintext, key, iv })
 }

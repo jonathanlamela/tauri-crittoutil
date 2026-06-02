@@ -13,6 +13,7 @@ import ConverterView from './views/ConverterView.vue'
 import KeyGeneratorView from './views/KeyGeneratorView.vue'
 import EncrypterView from './views/EncrypterView.vue'
 import DecrypterView from './views/DecrypterView.vue'
+import FileHasherView from './views/FileHasherView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -22,6 +23,7 @@ const router = createRouter({
     { path: '/key-generator', component: KeyGeneratorView },
     { path: '/encrypter', component: EncrypterView },
     { path: '/decrypter', component: DecrypterView },
+    { path: '/file-hasher', component: FileHasherView },
   ],
 })
 

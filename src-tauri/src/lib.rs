@@ -17,6 +17,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             hash_md5,
+            hash_md5_bytes,
             encrypt_aes_cbc,
             decrypt_aes_cbc,
             encrypt_aes_ecb,
