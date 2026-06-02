@@ -57,7 +57,12 @@ async function copy() {
 
 <template>
   <div>
-    <h2 class="text-h5 font-weight-bold">{{ t('fileHasher.title') }}</h2>
+    <div class="d-flex align-center justify-space-between mb-6">
+      <h2 class="text-h5 font-weight-bold">{{ t('fileHasher.title') }}</h2>
+      <v-btn variant="text" rounded="xl" size="small" prepend-icon="mdi-delete-outline" @click="reset">
+        {{ t('common.clear') }}
+      </v-btn>
+    </div>
 
     <!-- Drop zone -->
     <v-card

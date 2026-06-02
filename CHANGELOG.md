@@ -3,12 +3,14 @@
 **Google Play — English**
 Versione 2.0.2
 • New File Hash tool: compute the MD5 checksum of any file directly from the app
+• Added Clear button to File Hash and improved key list labels
 • Improved navigation with a dedicated section for file integrity verification
 • Minor interface refinements for a more consistent look and feel
 
 **Google Play — Italiano**
 Versione 2.0.2
 • Nuovo strumento Hash File: calcola il checksum MD5 di qualsiasi file direttamente dall'app
+• Aggiunto tasto Cancella su Hash File e migliorata l'etichetta della lista chiavi
 • Navigazione migliorata con una sezione dedicata alla verifica dell'integrità dei file
 • Piccoli miglioramenti all'interfaccia per un aspetto più uniforme
 

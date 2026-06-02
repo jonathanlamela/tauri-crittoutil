@@ -39,7 +39,7 @@ export default {
     keySize: 'Dimensione chiave (bit)',
     generateBtn: 'Genera',
     generatedKey: 'Chiave generata',
-    history: 'Cronologia (questa sessione)',
+    history: 'Chiavi',
     keyCopied: 'Chiave copiata negli appunti',
   },
   encrypter: {

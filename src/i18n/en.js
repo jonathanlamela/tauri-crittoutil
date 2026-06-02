@@ -2,7 +2,7 @@ export default {
   nav: {
     home: 'Home',
     converter: 'Converter',
-    keyGenerator: 'Key Generator',
+    keyGenerator: 'Keys',
     encrypter: 'Encrypter',
     decrypter: 'Decrypter',
     fileHasher: 'File Hash',
@@ -39,7 +39,7 @@ export default {
     keySize: 'Key size (bits)',
     generateBtn: 'Generate',
     generatedKey: 'Generated key',
-    history: 'History (this session)',
+    history: 'Keys',
     keyCopied: 'Key copied to clipboard',
   },
   encrypter: {
