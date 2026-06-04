@@ -59,6 +59,61 @@ const hashAnim = computed(() => {
   return             { from: 'file.pdf', to: '5d41402a…',        phase: 'done' }
 })
 
+// Stopwords da ignorare nel matching
+const STOPWORDS = new Set(['voglio', 'vorrei', 'devo', 'ho', 'bisogno', 'come', 'cosa', 'un', 'una', 'il', 'la', 'lo', 'di', 'per', 'che', 'con', 'del', 'della', 'i', 'e', 'a', 'in', 'su', 'da', 'to', 'a', 'the', 'an', 'of', 'my', 'need', 'want', 'how', 'can', 'do', 'i'])
+
+// Ogni feature ha keyword esatte (peso 3) e keyword fuzzy/parziali (peso 1)
+const FEATURE_KEYWORDS = {
+  '/converter': {
+    exact: ['converti', 'convertire', 'conversione', 'convert', 'conversion', 'base64', 'binario', 'binary', 'trasforma', 'transform', 'formato', 'format', 'codifica', 'decodifica', 'encode', 'decode', 'encoding', 'decoding'],
+    partial: ['testo', 'text', 'stringa', 'string'],
+  },
+  '/key-generator': {
+    exact: ['chiave', 'chiavi', 'key', 'keys', 'genera', 'generare', 'generate', 'generazione', 'generation', 'password', 'random', 'casuale', 'sicuro', 'secure', 'crittografica', 'cryptographic', 'bit', '128', '256', '512'],
+    partial: ['sicurezza', 'security'],
+  },
+  '/encrypter': {
+    exact: ['cifra', 'cifrare', 'cifratura', 'encrypt', 'encryption', 'aes', 'des', 'proteggi', 'proteggere', 'protect', 'nascondi', 'nascondere', 'hide', 'segreto', 'secret', 'cbc', 'ecb', 'crypt', 'criptare', 'criptato'],
+    partial: ['sicuro', 'sicurezza', 'secure', 'security', 'md5'],
+  },
+  '/decrypter': {
+    exact: ['decifra', 'decifrare', 'decifratura', 'decrypt', 'decryption', 'decrittografa', 'decrittografia', 'decodifica', 'decodificare', 'decode', 'aes', 'des', 'cbc', 'ecb', 'leggi', 'apri', 'rivela', 'reveal'],
+    partial: ['testo cifrato', 'ciphertext', 'payload'],
+  },
+  '/file-hasher': {
+    exact: ['hash', 'hashing', 'file', 'md5', 'checksum', 'impronta', 'fingerprint', 'integrità', 'integrity', 'verifica', 'verify', 'documento', 'document', 'calcola', 'calculate', 'somma', 'digest'],
+    partial: ['controlla', 'check'],
+  },
+}
+
+const searchQuery = ref('')
+
+const searchResult = computed(() => {
+  const q = searchQuery.value.trim().toLowerCase().replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o').replace(/[ùúûü]/g, 'u').replace(/[^a-z0-9\s]/g, '')
+  if (!q) return null
+  const tokens = q.split(/\s+/).filter(t => t.length > 1 && !STOPWORDS.has(t))
+  if (!tokens.length) return null
+
+  let best = null
+  let bestScore = 0
+  for (const [route, { exact, partial }] of Object.entries(FEATURE_KEYWORDS)) {
+    let score = 0
+    for (const token of tokens) {
+      // Exact match su keyword esatte: peso 3
+      if (exact.includes(token)) { score += 3; continue }
+      // Partial match (token contenuto nella keyword o viceversa) solo se token ≥ 4 char: peso 1
+      if (token.length >= 4) {
+        if (exact.some(k => k.includes(token) || token.includes(k))) { score += 1; continue }
+        if (partial.some(k => k.includes(token) || token.includes(k))) { score += 1 }
+      }
+    }
+    if (score > bestScore) { bestScore = score; best = route }
+  }
+  // Soglia minima: almeno 1 punto reale
+  if (bestScore < 1) return null
+  return features.value.find(f => f.to === best) ?? null
+})
+
 const features = computed(() => [
   { icon: 'mdi-swap-horizontal', title: t('nav.converter'),    description: t('home.converterDesc'),    to: '/converter',     anim: 'converter',   role: 'primary' },
   { icon: 'mdi-key',             title: t('nav.keyGenerator'), description: t('home.keyGeneratorDesc'), to: '/key-generator', anim: 'keygen',      role: 'secondary' },
@@ -74,6 +129,35 @@ const features = computed(() => [
       <v-icon size="40" color="primary" class="mr-3">mdi-shield-lock</v-icon>
       <h1 class="text-h4 font-weight-bold">{{ t('home.title') }}</h1>
     </div>
+
+    <v-text-field
+      v-model="searchQuery"
+      :placeholder="t('home.searchPlaceholder')"
+      prepend-inner-icon="mdi-magnify"
+      clearable
+      variant="outlined"
+      rounded="xl"
+      hide-details
+      class="mb-4"
+    />
+
+    <v-slide-y-transition>
+      <div v-if="searchResult" class="mb-6 d-flex align-center" style="gap: 12px;">
+        <span class="text-body-1">{{ t('home.searchSuggestion') }}</span>
+        <v-btn
+          :color="searchResult.role"
+          variant="tonal"
+          :prepend-icon="searchResult.icon"
+          :to="searchResult.to"
+          rounded="xl"
+        >
+          {{ searchResult.title }}
+        </v-btn>
+      </div>
+      <div v-else-if="searchQuery.trim()" class="mb-6">
+        <span class="text-body-2 text-medium-emphasis">{{ t('home.searchNoResult') }}</span>
+      </div>
+    </v-slide-y-transition>
 
     <v-row>
       <v-col v-for="f in features" :key="f.to" cols="12">

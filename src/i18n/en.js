@@ -15,6 +15,9 @@ export default {
     decrypterDesc: 'Decrypt ciphertext with AES (CBC/ECB) or DES (CBC/ECB)',
     fileHasherDesc: 'Compute the MD5 checksum of any file',
     open: 'Open',
+    searchPlaceholder: 'What do you want to do? (e.g. "encrypt a file")',
+    searchSuggestion: 'I suggest you use:',
+    searchNoResult: 'No matching feature found for this search.',
   },
   common: {
     clear: 'Clear',

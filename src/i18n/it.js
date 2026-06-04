@@ -15,6 +15,9 @@ export default {
     decrypterDesc: 'Decifra testo cifrato con AES (CBC/ECB) o DES (CBC/ECB)',
     fileHasherDesc: 'Calcola il checksum MD5 di qualsiasi file',
     open: 'Apri',
+    searchPlaceholder: 'Cosa vuoi fare? (es. "cifra un testo")',
+    searchSuggestion: 'Ti consiglio di usare:',
+    searchNoResult: 'Nessuna funzione trovata per questa ricerca.',
   },
   common: {
     clear: 'Cancella',
