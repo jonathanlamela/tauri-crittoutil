@@ -1,3 +1,21 @@
+## v2.0.4
+
+### Google Play — English
+
+Versione 2.0.4
+• New search functionality to quickly find tools and options within the app
+• Improved overall stability with bug fixes and quality improvements
+• Enhanced test coverage for a more reliable experience
+
+### Google Play — Italiano
+
+Versione 2.0.4
+• Nuova funzione di ricerca per trovare rapidamente strumenti e opzioni nell'app
+• Migliore stabilità generale grazie a correzioni di bug e miglioramenti della qualità
+• Copertura dei test ampliata per un'esperienza più affidabile
+
+---
+
 ## v2.0.3
 
 ### Google Play — English

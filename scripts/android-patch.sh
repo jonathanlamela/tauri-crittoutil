@@ -83,10 +83,13 @@ cat > "$RES/values-night/themes.xml" <<'EOF'
 </resources>
 EOF
 
-# 8. Gradle — force Java 17+ (Android Studio JBR) regardless of system JAVA_HOME
+# 8. Gradle — force Java 17 (Homebrew) regardless of system JAVA_HOME
 GRADLE_PROPS="src-tauri/gen/android/gradle.properties"
-if ! grep -q "org.gradle.java.home" "$GRADLE_PROPS"; then
-  echo 'org.gradle.java.home=/Applications/Android Studio.app/Contents/jbr/Contents/Home' >> "$GRADLE_PROPS"
+JAVA17="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+if grep -q "org.gradle.java.home" "$GRADLE_PROPS"; then
+  sed -i '' "s|org.gradle.java.home=.*|org.gradle.java.home=$JAVA17|" "$GRADLE_PROPS"
+else
+  echo "org.gradle.java.home=$JAVA17" >> "$GRADLE_PROPS"
 fi
 
 echo "Android patches applied."

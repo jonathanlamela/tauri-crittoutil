@@ -1,6 +1,6 @@
 [package]
 name = "crittoutil"
-version = "2.0.3"
+version = "2.0.4"
 description = "CrittoUtil - Cryptographic Utilities"
 authors = ["Jonathan Lamela"]
 license = ""
